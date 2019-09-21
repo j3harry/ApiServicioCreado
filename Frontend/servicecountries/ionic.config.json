@@ -1,0 +1,7 @@
+{
+  "name": "servicecountries",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
