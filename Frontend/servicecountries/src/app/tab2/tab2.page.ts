@@ -43,7 +43,7 @@ export class Tab2Page implements OnInit {
           role: 'cancel',
           cssClass: 'tertiary',
           handler: () => {
-            this.errorMessage = 'Se presentó un error al consultar los usuarios.';
+            this.errorMessage = error;
           }
         }
       ]

@@ -14,7 +14,7 @@ export class CountriesService {
 
   getCountries(): Observable<any[]> {
     return this.http.get<any[]>(this.countriesUrl).pipe(
-      tap(data => console.log('ALL ' + JSON.stringify(data))),
+      tap(data => data),
       catchError(this.handleError)
       );
   }
@@ -23,13 +23,32 @@ export class CountriesService {
 
     let errorMessage = 'no hay conexion';
 
+    switch(err.status) {
+      case 0:
+        errorMessage = `Problemas en el servidor... CODIGO DE ERROR: ${ err.status }`;
+        break;
+      case 400:
+        errorMessage = `Ops, problemas en el servidor... CODIGO DE ERROR: ${ err.status }`;
+        break;
+      case 403:
+        errorMessage = `El usuario no tiene acceso a esta operación... CODIGO DE ERROR: ${ err.status }`;
+        break;
+      case 500:
+        errorMessage = `El servidor no pudo procesar la petición... CODIGO DE ERROR: ${ err.status }`;
+        break;
+      default:
+        errorMessage = `Por favor intente de nuevo... CODIGO DE ERROR: ${ err.status }`;
+    }
+
+    return throwError(errorMessage);
+    /*
     if (err.error instanceof ErrorEvent) {
       errorMessage = `An error ocurred ${ err.error.message }`;
     } else {
       errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`;
-  }
-    console.log(errorMessage);
-    return throwError(errorMessage);
     }
+    return throwError(errorMessage);
+    */
+  }
 }
 
