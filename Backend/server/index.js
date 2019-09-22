@@ -4,6 +4,8 @@ const PORT = 3000;
 const cors = require('cors');
 app.use(cors());
 
+const users = require('../userJson/user.json');
+
 app.get('/', (req, res) => {
     res.send('Llamar http://localhost:3000/user');
 });
@@ -13,6 +15,11 @@ app.listen(PORT, () => {
 });
 
 app.get('/user', (req, res) => {
-    const user = require('../userJson/user.json');
-    res.json(user);
+    res.json(users);
+});
+
+app.get('/user/:id', (req, res) => {
+    const id = req.params.id;
+    const user = users.find(item => item.id == id)
+    res.json({...user });
 });
